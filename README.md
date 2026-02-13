@@ -18,8 +18,22 @@ This implements hooks for Gemini CLI to provide the following hooks.
 
 ![Sidekick in action](screenshots/sidekick.png)
 
+### Prerequisites
+
+- Node.js 23.6+
+- npm
+- Gemini CLI
+- VSCode
+  - `code` command in your path
+  - (optional) Mermaid extension for Mermaid charts
+
 ## Installation
 
+### Steps
+
 ```bash
+git clone https://github.com/sandipchitale/sidekick.git
+cd sidekick
+npm install
 gemini extension link .
 ```
