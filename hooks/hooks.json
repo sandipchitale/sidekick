@@ -7,7 +7,7 @@
           {
             "name": "start-sidekick",
             "type": "command",
-            "command": "node ${extensionPath}/scripts/session-start.ts"
+            "command": "node ${extensionPath}/scripts/sidekick.ts session-start"
           }
         ]
       }
@@ -19,7 +19,7 @@
           {
             "name": "send-to-sidekick",
             "type": "command",
-            "command": "node ${extensionPath}/scripts/before-model.ts"
+            "command": "node ${extensionPath}/scripts/sidekick.ts before-model"
           }
         ]
       }
@@ -31,7 +31,7 @@
           {
             "name": "send-to-sidekick",
             "type": "command",
-            "command": "node ${extensionPath}/scripts/after-model.ts"
+            "command": "node ${extensionPath}/scripts/sidekick.ts after-model"
           }
         ]
       }
@@ -43,7 +43,7 @@
           {
             "name": "end-sidekick",
             "type": "command",
-            "command": "node ${extensionPath}/scripts/session-end.ts"
+            "command": "node ${extensionPath}/scripts/sidekick.ts session-end"
           }
         ]
       }

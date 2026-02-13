@@ -3,20 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "script/index.ts",
-  "scripts": {
-    "start": "node scripts/index.ts"
-  },
+  "main": "scripts/sidekick.ts",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^22.13.1",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  },
-  "dependencies": {
-    "ws": "^8.18.0"
-  }
+  "license": "MIT"
 }
