@@ -65,7 +65,8 @@ const hookName = json.hook_event_name;
                     const filePath = getVolleyFilePath(sessionId);
                     if (json.llm_request.messages.at(-1).content !== '') {
                         const timestamp = new Date(json.timestamp).toLocaleString();
-                        appendFileSync(filePath, `\n\n## Prompt ( Model: ${json.llm_request.model} ) ( ${timestamp} )\n\n${json.llm_request.messages.at(-1).content}\n\n### Response\n\n`);
+                        appendFileSync(filePath, `\n\n## Prompt ( Model: ${json.llm_request.model} ) ( ${timestamp} )\n\n${json.llm_request.messages.at(-1).content}`);
+                        appendFileSync(filePath, `\n\n### Response\n\n`);
                     }
                     execSync(`code ${filePath}`);
                 });
