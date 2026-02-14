@@ -54,6 +54,7 @@ const hookName = json.hook_event_name;
                     const filePath = getVolleyFilePath(sessionId);
                     const timestamp = new Date(json.timestamp).toLocaleString();
                     writeFileSync(filePath, `\n\n# Session: ${sessionId} ( ${timestamp} ) \n\n`);
+                    execSync(`code ${join(getSidekickDir(), `${sessionId}.md`)}`);
                 });
                 break;
             case 'BeforeModel':
