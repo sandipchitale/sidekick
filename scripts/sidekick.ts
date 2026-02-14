@@ -37,33 +37,28 @@ async function safeExecute(fn: () => Promise<void>): Promise<void> {
     }
 }
 
-// Sidekick main logic
-const hookName = process.argv[2];
+const json = await readJsonStdin<any>();
 
-if (!hookName) {
-    console.error('Usage: node sidekick.js <hook-name>');
-    process.exit(1);
-}
+const hookName = json.hook_event_name;
 
 (async () => {
     try {
         switch (hookName) {
-            case 'session-start':
+            case 'SessionStart':
                 await safeExecute(async () => {
                     const sidekickDir = getSidekickDir();
                     execSync(`code -n ${sidekickDir}`);
-                    const json = await readJsonStdin<any>();
+                    
                     // console.log(JSON.stringify(json, null, 2));
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     writeFileSync(filePath, '');
                 });
                 break;
-            case 'before-model':
+            case 'BeforeModel':
                 await safeExecute(async () => {
                     const sidekickDir = getSidekickDir();
                     execSync(`code -n ${sidekickDir}`);
-                    const json = await readJsonStdin<any>();
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     if (json.llm_request.messages.at(-1).content !== '') {
@@ -72,21 +67,19 @@ if (!hookName) {
                     execSync(`code ${filePath}`);
                 });
                 break;
-            case 'after-model':
+            case 'AfterModel':
                  {
                     const sidekickDir = getSidekickDir();
                     // execSync(`code -n ${sidekickDir}`);
                     await safeExecute(async () => {
-                        const json = await readJsonStdin<any>();
                         const sessionId = json.session_id;
                         const filePath = getVolleyFilePath(sessionId);
                         appendFileSync(filePath, `${json.llm_response.text}`);
                     });
                 }
                 break;
-            case 'session-end':
+            case 'SessionEnd':
                 await safeExecute(async () => {
-                    const json = await readJsonStdin<any>();
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     if (existsSync(filePath)) {
