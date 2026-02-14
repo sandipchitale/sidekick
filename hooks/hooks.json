@@ -43,7 +43,7 @@
           {
             "name": "end-sidekick",
             "type": "command",
-            "command": "node ${extensionPath}/scripts/sidekick.ts"
+            "command": "node ${extensionPath}/scripts/sidekick.ts session-end"
           }
         ]
       }

@@ -52,7 +52,8 @@ const hookName = json.hook_event_name;
                     // console.log(JSON.stringify(json, null, 2));
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
-                    writeFileSync(filePath, '');
+                    const timestamp = new Date(json.timestamp).toLocaleString();
+                    writeFileSync(filePath, `\n\n# Session: ${sessionId} ( ${timestamp} ) \n\n`);
                 });
                 break;
             case 'BeforeModel':
@@ -62,7 +63,8 @@ const hookName = json.hook_event_name;
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     if (json.llm_request.messages.at(-1).content !== '') {
-                        appendFileSync(filePath, `\n\n# Prompt\n\n${json.llm_request.messages.at(-1).content}\n\n# Response\n\n`);
+                        const timestamp = new Date(json.timestamp).toLocaleString();
+                        appendFileSync(filePath, `\n\n## Prompt ( Model: ${json.llm_request.model} ) ( ${timestamp} )\n\n${json.llm_request.messages.at(-1).content}\n\n### Response\n\n`);
                     }
                     execSync(`code ${filePath}`);
                 });
