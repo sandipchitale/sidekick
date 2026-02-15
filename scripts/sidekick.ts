@@ -84,6 +84,9 @@ const hookName = json.hook_event_name;
                 break;
             case 'SessionEnd':
                 await safeExecute(async () => {
+                    if (process.env.GEMINI_SIDEKICK_KEEP_SESSION_FILE === 'true') {
+                        return;
+                    }
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     if (existsSync(filePath)) {

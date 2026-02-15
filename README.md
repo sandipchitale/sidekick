@@ -37,3 +37,13 @@ cd sidekick
 npm install
 gemini extension link .
 ```
+
+#### Settings
+
+```bash
+gemini extensions config sidekick
+Configuring settings for "sidekick"...
+✔ Setting "Keep Session File" (GEMINI_SIDEKICK_KEEP_SESSION_FILE) is already set. Overwrite? … yes
+? Keep Session File
+Whether to keep the session file after the session ends. › false (default) | true
+```

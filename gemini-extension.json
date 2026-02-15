@@ -1,4 +1,12 @@
 {
   "name": "sidekick",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "settings": [
+    {
+      "name": "Keep Session File",
+      "description": "Whether to keep the session file after the session ends.",
+      "envVar": "GEMINI_SIDEKICK_KEEP_SESSION_FILE",
+      "sensitive": false
+    }
+  ]
 }
