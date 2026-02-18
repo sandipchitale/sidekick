@@ -47,9 +47,7 @@ const hookName = json.hook_event_name;
             case 'SessionStart':
                 await safeExecute(async () => {
                     const sidekickDir = getSidekickDir();
-                    execSync(`code -n ${sidekickDir}`);
-                    
-                    // console.log(JSON.stringify(json, null, 2));
+                    execSync(`code -n ${sidekickDir}`); 
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     const timestamp = new Date(json.timestamp).toLocaleString();
@@ -60,7 +58,7 @@ const hookName = json.hook_event_name;
             case 'BeforeModel':
                 await safeExecute(async () => {
                     const sidekickDir = getSidekickDir();
-                    execSync(`code -n ${sidekickDir}`);
+                    execSync(`code -n ${sidekickDir}`); 
                     const sessionId = json.session_id;
                     const filePath = getVolleyFilePath(sessionId);
                     if (json.llm_request.messages.at(-1).content !== '') {
@@ -72,9 +70,9 @@ const hookName = json.hook_event_name;
                 });
                 break;
             case 'AfterModel':
-                 {
+                {
                     const sidekickDir = getSidekickDir();
-                    // execSync(`code -n ${sidekickDir}`);
+                    execSync(`code -n ${sidekickDir}`);
                     await safeExecute(async () => {
                         const sessionId = json.session_id;
                         const filePath = getVolleyFilePath(sessionId);
