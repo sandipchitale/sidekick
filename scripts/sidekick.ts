@@ -37,19 +37,19 @@ async function safeExecute(fn: () => Promise<void>): Promise<void> {
     }
 }
 
-const json = await readJsonStdin<any>();
-
-const hookName = json.hook_event_name;
 
 (async () => {
+    const json = await readJsonStdin<any>();
+    const hookName = json.hook_event_name;
+    const sidekickDir = getSidekickDir();
+    const sessionId = json.session_id;
+    const filePath = getVolleyFilePath(sessionId);
+
     try {
         switch (hookName) {
             case 'SessionStart':
                 await safeExecute(async () => {
-                    const sidekickDir = getSidekickDir();
-                    execSync(`code -n ${sidekickDir}`); 
-                    const sessionId = json.session_id;
-                    const filePath = getVolleyFilePath(sessionId);
+                    execSync(`code -n ${sidekickDir}`);
                     const timestamp = new Date(json.timestamp).toLocaleString();
                     writeFileSync(filePath, `\n\n# Session: ${sessionId} ( ${timestamp} ) \n\n`);
                     execSync(`code ${join(getSidekickDir(), `${sessionId}.md`)}`);
@@ -57,10 +57,7 @@ const hookName = json.hook_event_name;
                 break;
             case 'BeforeModel':
                 await safeExecute(async () => {
-                    const sidekickDir = getSidekickDir();
                     execSync(`code -n ${sidekickDir}`); 
-                    const sessionId = json.session_id;
-                    const filePath = getVolleyFilePath(sessionId);
                     if (json.llm_request.messages.at(-1).content !== '') {
                         const timestamp = new Date(json.timestamp).toLocaleString();
                         appendFileSync(filePath, `\n\n## Prompt ( Model: ${json.llm_request.model} ) ( ${timestamp} )\n\n${json.llm_request.messages.at(-1).content}`);
@@ -71,11 +68,8 @@ const hookName = json.hook_event_name;
                 break;
             case 'AfterModel':
                 {
-                    const sidekickDir = getSidekickDir();
-                    execSync(`code -n ${sidekickDir}`);
                     await safeExecute(async () => {
-                        const sessionId = json.session_id;
-                        const filePath = getVolleyFilePath(sessionId);
+                        execSync(`code -n ${sidekickDir}`);
                         appendFileSync(filePath, `${json.llm_response.text}`);
                     });
                 }
@@ -85,8 +79,6 @@ const hookName = json.hook_event_name;
                     if (process.env.GEMINI_SIDEKICK_KEEP_SESSION_FILE === 'true') {
                         return;
                     }
-                    const sessionId = json.session_id;
-                    const filePath = getVolleyFilePath(sessionId);
                     if (existsSync(filePath)) {
                         unlinkSync(filePath);
                     }
